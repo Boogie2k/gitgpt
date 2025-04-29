@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 import "./globals.css";
+import { Slide, ToastContainer } from "react-toastify";
 
 export const roboto = Roboto({
   subsets: ["latin"],
@@ -21,6 +22,19 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${roboto.variable} bg-weyotoLight antialiased`}>
+        <ToastContainer
+          position="bottom-center"
+          autoClose={5000}
+          hideProgressBar
+          newestOnTop={false}
+          closeOnClick={false}
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="dark"
+          transition={Slide}
+        />
         {children}
       </body>
     </html>
