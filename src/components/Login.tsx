@@ -2,12 +2,22 @@
 import { TextField } from "@mui/material";
 import React, { useState } from "react";
 //import LockOpenIcon from "@mui/icons-material/LockOpen";
-import { toast } from "react-toastify";
+
 import { Button } from "./Button";
+import { login } from "@/networking/login";
+import { useRouter } from "next/navigation";
 
 const Login = () => {
   const [email, setEmail] = useState("");
-  const notify = () => toast("✔️ We’ve sent a 6-digit code to your email");
+  const router = useRouter();
+
+  const goToVerifyEmail = () => {
+    router.push("/verify_email");
+  };
+
+  const handleLogin = () => {
+    login(email, goToVerifyEmail);
+  };
 
   return (
     <div className="gap-10">
@@ -26,7 +36,7 @@ const Login = () => {
           variant="filled"
         />
 
-        <Button disabled={email ? false : true} onClick={notify}>
+        <Button disabled={email ? false : true} onClick={handleLogin}>
           Send verification code
         </Button>
       </div>
