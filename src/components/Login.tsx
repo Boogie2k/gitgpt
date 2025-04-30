@@ -9,14 +9,17 @@ import { useRouter } from "next/navigation";
 
 const Login = () => {
   const [email, setEmail] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   const goToVerifyEmail = () => {
     router.push("/verify_email");
   };
 
-  const handleLogin = () => {
-    login(email, goToVerifyEmail);
+  const handleLogin = async () => {
+    setIsLoading(true);
+    await login(email, goToVerifyEmail);
+    setIsLoading(false);
   };
 
   return (
@@ -36,7 +39,11 @@ const Login = () => {
           variant="filled"
         />
 
-        <Button disabled={email ? false : true} onClick={handleLogin}>
+        <Button
+          isLoading={isLoading}
+          disabled={email && !isLoading ? false : true}
+          onClick={handleLogin}
+        >
           Send verification code
         </Button>
       </div>

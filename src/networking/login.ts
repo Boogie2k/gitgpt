@@ -3,6 +3,10 @@ import { base_url } from "./baseUrl";
 
 export const login = async (email: string, navigate: () => void) => {
   try {
+    if (!email) {
+      toast.error("email can't be empty");
+      return;
+    }
     const notify = () => toast("✔️ We’ve sent a 6-digit code to your email");
     const response = await fetch(`${base_url}/auth/request-code`, {
       method: "POST",
