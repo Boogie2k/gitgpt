@@ -4,12 +4,12 @@ import { base_url } from "./baseUrl";
 export const login = async (email: string, navigate: () => void) => {
   try {
     const notify = () => toast("✔️ We’ve sent a 6-digit code to your email");
-    const response = await fetch(`${base_url}/auth/request_code`, {
+    const response = await fetch(`${base_url}/auth/request-code`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(email),
+      body: JSON.stringify({ email }),
     });
 
     const result = await response.json();
