@@ -3,7 +3,7 @@ import { Roboto } from "next/font/google";
 import "./globals.css";
 import { Slide, ToastContainer } from "react-toastify";
 
-export const roboto = Roboto({
+const roboto = Roboto({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-roboto",
