@@ -6,9 +6,12 @@ import React, { useState } from "react";
 import { Button } from "./Button";
 import { login } from "@/networking/login";
 import { useRouter } from "next/navigation";
+import { useBoundStore } from "@/store/store";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
+  // const [email, setEmail] = useState("");
+  const email = useBoundStore((state) => state.email);
+  const setEmail = useBoundStore((state) => state.setEmail);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 

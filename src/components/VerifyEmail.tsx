@@ -1,12 +1,28 @@
 "use client";
-import { TextField, Button } from "@mui/material";
+import { TextField } from "@mui/material";
 import React, { useState } from "react";
 
-import { toast } from "react-toastify";
+import { Button } from "./Button";
+import { verifyCode } from "@/networking/verifyCode";
+import { useRouter } from "next/navigation";
+import { useBoundStore } from "@/store/store";
 
 const VerifyEmail = () => {
-  const [email, setEmail] = useState("");
-  const notify = () => toast("✔️ We’ve sent a 6-digit code to your email");
+  const email = useBoundStore((state) => state.email);
+  const code = useBoundStore((state) => state.code);
+  const setCode = useBoundStore((state) => state.setCode);
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
+
+  const goToConnect = () => {
+    router.push("/connect");
+  };
+
+  const handleVerifyEmail = async () => {
+    setIsLoading(true);
+    await verifyCode(email, code, goToConnect);
+    setIsLoading(false);
+  };
 
   return (
     <div className="gap-10">
@@ -18,28 +34,19 @@ const VerifyEmail = () => {
         </div>
 
         <TextField
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          value={code}
+          onChange={(e) => setCode(e.target.value)}
           id="filled-basic"
           label="Code"
           variant="filled"
         />
 
         <Button
-          onClick={notify}
-          disabled={email ? false : true}
-          style={{
-            //  background: email ? "#1D1B20" : "auto",
-            borderRadius: 32,
-            width: "75%",
-            marginRight: "auto",
-            marginLeft: "auto",
-          }}
-          className="rounded-full bg-white mx-auto "
-          variant="contained"
-          href="#contained-buttons"
+          disabled={isLoading && !code}
+          isLoading={isLoading}
+          onClick={handleVerifyEmail}
         >
-          Verify and Continue
+          VERIFY AND CONTINUE
         </Button>
       </div>
       <div className="flex flex-row justify-center  mt-10 font-bold">
