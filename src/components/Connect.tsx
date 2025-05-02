@@ -4,9 +4,25 @@ import React, { useState } from "react";
 
 import { Button } from "./Button";
 import AccordionUsage from "./Accordion";
+import { useBoundStore } from "@/store/store";
+import { connectGit } from "@/networking/connect";
+import { useRouter } from "next/navigation";
 
 const Connect = () => {
-  const [email, setEmail] = useState("");
+  const gitPat = useBoundStore((state) => state.gitPat);
+  const setGitPat = useBoundStore((state) => state.setgitPat);
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
+
+  const goToHomepage = () => {
+    router.push("/");
+  };
+
+  const handleConnect = async () => {
+    setIsLoading(true);
+    await connectGit(gitPat, goToHomepage);
+    setIsLoading(false);
+  };
 
   return (
     <div className="gap-10 w-[23rem]">
@@ -24,8 +40,8 @@ const Connect = () => {
 
         <TextField
           type="password"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          value={gitPat}
+          onChange={(e) => setGitPat(e.target.value)}
           id="filled-basic"
           label="Paste your GitHub Token (PAT)"
           variant="filled"
@@ -35,8 +51,9 @@ const Connect = () => {
         </p>
 
         <Button
-          disabled={email ? false : true}
-          onClick={() => console.log("hello")}
+          disabled={!gitPat || isLoading}
+          isLoading={isLoading}
+          onClick={handleConnect}
         >
           Save Token
         </Button>

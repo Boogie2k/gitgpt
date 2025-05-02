@@ -20,6 +20,7 @@ export const login = async (email: string, navigate: () => void) => {
 
     if (!response.ok) {
       toast.error("An error ocuured");
+      return;
     }
 
     navigate();
