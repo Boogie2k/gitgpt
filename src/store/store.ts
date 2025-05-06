@@ -14,14 +14,24 @@ import {
   ConnectSliceState,
   createConnectSlice,
 } from "./slice/connectSlice";
+import {
+  createMenuSlice,
+  MenuSliceAction,
+  MenuSliceState,
+} from "./slice/MenuSlice";
 
-type StoreState = LoginSliceState & VerifyCodeSliceState & ConnectSliceState;
+type StoreState = LoginSliceState &
+  VerifyCodeSliceState &
+  ConnectSliceState &
+  MenuSliceState;
 
 type StoreActions = LoginSliceAction &
   VerifyCodeSliceAction &
-  ConnectSliceAction;
+  ConnectSliceAction &
+  MenuSliceAction;
 export const useBoundStore = create<StoreState & StoreActions>()((...a) => ({
   ...createLoginSlice(...a),
   ...createVerifyCode(...a),
   ...createConnectSlice(...a),
+  ...createMenuSlice(...a),
 }));
