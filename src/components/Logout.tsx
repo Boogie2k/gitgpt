@@ -21,7 +21,7 @@ const Logout = () => {
   const router = useRouter();
 
   const handleLogout = () => {
-    logout(() => router.replace("/login"));
+    logout(() => router.replace("/connect"));
   };
 
   return (

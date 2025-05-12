@@ -1,12 +1,13 @@
-import Connect from "@/components/Connect";
+import ConnectPage from "@/components/ConnectPage";
+
 import React from "react";
 
-const page = () => {
+const Page = () => {
   return (
     <div className="items-center justify-center h-screen flex flex-1">
-      <Connect />
+      <ConnectPage />
     </div>
   );
 };
 
-export default page;
+export default Page;

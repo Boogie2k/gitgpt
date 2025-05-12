@@ -4,7 +4,7 @@ import React, { useState } from "react";
 
 import { Button } from "./Button";
 import { verifyCode } from "@/networking/verifyCode";
-import { useRouter } from "next/navigation";
+//import { useRouter } from "next/navigation";
 import { useBoundStore } from "@/store/store";
 
 const VerifyEmail = () => {
@@ -12,10 +12,13 @@ const VerifyEmail = () => {
   const code = useBoundStore((state) => state.code);
   const setCode = useBoundStore((state) => state.setCode);
   const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter();
+  // const router = useRouter();
+  const setIsPage = useBoundStore((state) => state.setIsPage);
 
   const goToConnect = () => {
-    router.push("/connect");
+    // router.push("/connect");
+    setIsPage("connect");
+    setCode("");
   };
 
   const handleVerifyEmail = async () => {
@@ -42,16 +45,23 @@ const VerifyEmail = () => {
         />
 
         <Button
-          disabled={isLoading && !code}
+          disabled={isLoading || !code}
           isLoading={isLoading}
           onClick={handleVerifyEmail}
         >
           VERIFY AND CONTINUE
         </Button>
       </div>
-      <div className="flex flex-row justify-center  mt-10 font-bold">
-        <p className="border-b-2 border-black">Change email</p>
-      </div>
+
+      <p
+        onClick={() => {
+          setIsPage("login");
+          setCode("");
+        }}
+        className="underline text-center  mt-10 font-bold hover:cursor-pointer"
+      >
+        Change email
+      </p>
     </div>
   );
 };

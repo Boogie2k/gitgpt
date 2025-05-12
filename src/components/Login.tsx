@@ -5,7 +5,7 @@ import React, { useState } from "react";
 
 import { Button } from "./Button";
 import { login } from "@/networking/login";
-import { useRouter } from "next/navigation";
+//import { useRouter } from "next/navigation";
 import { useBoundStore } from "@/store/store";
 
 const Login = () => {
@@ -13,10 +13,12 @@ const Login = () => {
   const email = useBoundStore((state) => state.email);
   const setEmail = useBoundStore((state) => state.setEmail);
   const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter();
+  // const router = useRouter();
+  const setIsPage = useBoundStore((state) => state.setIsPage);
 
   const goToVerifyEmail = () => {
-    router.push("/verify_email");
+    //  router.push("/verify_email");
+    setIsPage("verifyEmail");
   };
 
   const handleLogin = async () => {
