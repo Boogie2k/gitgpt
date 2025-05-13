@@ -39,6 +39,7 @@ export default function GitHubSuccessPage() {
     "loading"
   );
   const [errorMessage, setErrorMessage] = useState<string>("");
+  const [countdown, setCountdown] = useState<number>(15); // 1.5 seconds in tenths of a second
   const router = useRouter();
   const code = useSearchParams().get("code");
 
@@ -52,18 +53,18 @@ export default function GitHubSuccessPage() {
 
         if (result.success) {
           setStatus("success");
-          // Short delay before redirect to show success state
+          /*  // Short delay before redirect to show success state
           setTimeout(() => {
             router.replace("/");
-          }, 1500);
+          }, 1500); */
         } else {
           setStatus("error");
           setErrorMessage(
             `Failed to complete GitHub connection,  Redirecting back to the connect page...`
           );
-          setTimeout(() => {
+          /*  setTimeout(() => {
             router.replace("/connect");
-          }, 1500);
+          }, 1500); */
         }
       } catch (error) {
         setStatus("error");
@@ -71,14 +72,49 @@ export default function GitHubSuccessPage() {
           `An unexpected error occurred,  Redirecting back to the connect page...`
         );
         console.log(error);
-        setTimeout(() => {
+        /*  setTimeout(() => {
           router.replace("/connect");
-        }, 1500);
+        }, 1500); */
       }
     };
 
     completeConnection();
   }, [router, code]);
+
+  useEffect(() => {
+    if (status !== "success") {
+      const interval = setInterval(() => {
+        setCountdown((prev) => {
+          if (prev <= 1) {
+            clearInterval(interval);
+            router.push("/connect");
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 100); // Update every 100ms for smooth countdown
+
+      return () => clearInterval(interval);
+
+      return;
+    }
+
+    // Start countdown timer
+    const interval = setInterval(() => {
+      setCountdown((prev) => {
+        if (prev <= 1) {
+          clearInterval(interval);
+          router.push("/");
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 100); // Update every 100ms for smooth countdown
+
+    return () => clearInterval(interval);
+  }, [status, router]);
+
+  /*  const formattedCountdown = (countdown / 10).toFixed(1); */
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
@@ -106,6 +142,12 @@ export default function GitHubSuccessPage() {
                 Your GitHub account has been successfully connected. Redirecting
                 to Homepage...
               </p>
+              <div className="w-full bg-gray-200 rounded-full h-3 mt-2">
+                <div
+                  className="bg-green-500 h-3 rounded-full transition-all duration-100 ease-linear"
+                  style={{ width: `${(countdown / 15) * 100}%` }}
+                ></div>
+              </div>
             </>
           )}
 
@@ -118,15 +160,21 @@ export default function GitHubSuccessPage() {
                 Connection Error
               </h1>
               <p className="text-gray-600">{errorMessage}</p>
+              <div className="w-full bg-gray-200 rounded-full h-3 mt-2">
+                <div
+                  className="bg-green-500 h-3 rounded-full transition-all duration-100 ease-linear"
+                  style={{ width: `${(countdown / 15) * 100}%` }}
+                ></div>
+              </div>
             </>
           )}
 
           {status === "error" && (
             <button
-              onClick={() => setStatus("loading")}
+              onClick={() => router.push("/connect")}
               className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
             >
-              Try Again
+              go back to the connect page
             </button>
           )}
 
