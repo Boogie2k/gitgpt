@@ -11,12 +11,18 @@ async function finalizeGitHubConnection(code: string) {
   try {
     // Simulate API call with a delay
     // Replace this with your actual API call
-    const result = await saveToken(code);
-
-    if (!result) {
+    if (!code) {
       return {
         succes: false,
-        error: "somethring went wrong",
+        error: "bad request",
+      };
+    }
+    const result = await saveToken(code);
+
+    if (result.error) {
+      return {
+        succes: false,
+        error: result.error,
       };
     }
 
@@ -40,10 +46,7 @@ export default function GitHubSuccessPage() {
     const completeConnection = async () => {
       try {
         if (!code) {
-          return {
-            success: false,
-            error: "somethring went wrong",
-          };
+          return;
         }
         const result = await finalizeGitHubConnection(code);
 
