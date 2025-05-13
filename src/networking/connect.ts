@@ -31,7 +31,7 @@ export const connectGit = async (gitPat: string, navigate: () => void) => {
 
     toast.success(result.message);
 
-    cookies.set("isConnected", true);
+    //cookies.set("isConnected", true);
     //console.log({ result });
 
     return result;
