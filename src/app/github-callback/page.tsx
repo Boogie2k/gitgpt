@@ -1,55 +1,115 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { CheckCircle } from "lucide-react";
+import { CheckCircle, Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 
+// This would be your actual API call to finalize the GitHub connection
+async function finalizeGitHubConnection() {
+  try {
+    // Simulate API call with a delay
+    // Replace this with your actual API call
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+
+    // Return success
+    return { success: true };
+  } catch (error) {
+    console.error("Error finalizing GitHub connection:", error);
+    return { success: false, error };
+  }
+}
+
 export default function GitHubSuccessPage() {
-  const [countdown, setCountdown] = useState(5);
+  const [status, setStatus] = useState<"loading" | "success" | "error">(
+    "loading"
+  );
+  const [errorMessage, setErrorMessage] = useState<string>("");
   const router = useRouter();
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      router.push("/dashboard");
-    }, 5000);
+    const completeConnection = async () => {
+      try {
+        const result = await finalizeGitHubConnection();
 
-    const interval = setInterval(() => {
-      setCountdown((prev) => prev - 1);
-    }, 1000);
-
-    return () => {
-      clearTimeout(timer);
-      clearInterval(interval);
+        if (result.success) {
+          setStatus("success");
+          // Short delay before redirect to show success state
+          setTimeout(() => {
+            router.push("/");
+          }, 1500);
+        } else {
+          setStatus("error");
+          setErrorMessage("Failed to complete GitHub connection");
+        }
+      } catch (error) {
+        setStatus("error");
+        setErrorMessage("An unexpected error occurred");
+        console.log(error);
+      }
     };
+
+    completeConnection();
   }, [router]);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
       <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-md">
         <div className="flex flex-col items-center text-center space-y-4">
-          <CheckCircle className="h-16 w-16 text-green-500" />
+          {status === "loading" && (
+            <>
+              <Loader2 className="h-16 w-16 text-blue-500 animate-spin" />
+              <h1 className="text-2xl font-bold text-gray-900">
+                Finalizing GitHub Connection
+              </h1>
+              <p className="text-gray-600">
+                Please wait while we complete your GitHub account connection...
+              </p>
+            </>
+          )}
 
-          <h1 className="text-2xl font-bold text-gray-900">
-            GitHub Connection Successful
-          </h1>
+          {status === "success" && (
+            <>
+              <CheckCircle className="h-16 w-16 text-green-500" />
+              <h1 className="text-2xl font-bold text-gray-900">
+                GitHub Connection Successful
+              </h1>
+              <p className="text-gray-600">
+                Your GitHub account has been successfully connected. Redirecting
+                to Homepage...
+              </p>
+            </>
+          )}
 
-          <p className="text-gray-600">
-            Your GitHub account has been successfully connected. You will be
-            redirected to the dashboard in {countdown} seconds.
-          </p>
+          {status === "error" && (
+            <>
+              <div className="h-16 w-16 rounded-full bg-red-100 flex items-center justify-center">
+                <span className="text-red-500 text-2xl">!</span>
+              </div>
+              <h1 className="text-2xl font-bold text-gray-900">
+                Connection Error
+              </h1>
+              <p className="text-gray-600">{errorMessage}</p>
+            </>
+          )}
 
-          <div className="w-full bg-gray-200 rounded-full h-2.5 mt-4">
-            <div
-              className="bg-green-500 h-2.5 rounded-full transition-all duration-1000 ease-in-out"
-              style={{ width: `${(5 - countdown) * 20}%` }}
-            ></div>
-          </div>
+          {status === "error" && (
+            <button
+              onClick={() => setStatus("loading")}
+              className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
+            >
+              Try Again
+            </button>
+          )}
 
           <button
-            onClick={() => router.push("/dashboard")}
-            className="mt-4 px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition-colors"
+            onClick={() => router.push("/")}
+            className={`mt-4 px-4 py-2 ${
+              status === "success"
+                ? "bg-green-500 hover:bg-green-600"
+                : "bg-gray-500 hover:bg-gray-600"
+            } text-white rounded-md transition-colors`}
           >
-            Go to Dashboard Now
+            Go to Homepage
           </button>
         </div>
       </div>
