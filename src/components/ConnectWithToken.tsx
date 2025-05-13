@@ -8,7 +8,7 @@ import { useBoundStore } from "@/store/store";
 import { connectGit } from "@/networking/connect";
 import { useRouter } from "next/navigation";
 
-const Connect = () => {
+const ConnectWithToken = () => {
   const gitPat = useBoundStore((state) => state.gitPat);
   const setGitPat = useBoundStore((state) => state.setgitPat);
   const [isLoading, setIsLoading] = useState(false);
@@ -66,4 +66,4 @@ const Connect = () => {
   );
 };
 
-export default Connect;
+export default ConnectWithToken;

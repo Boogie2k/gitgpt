@@ -19,19 +19,27 @@ import {
   MenuSliceAction,
   MenuSliceState,
 } from "./slice/MenuSlice";
+import {
+  createHomeSlice,
+  HomeSliceAction,
+  HomeSliceState,
+} from "./slice/HomeSlice";
 
 type StoreState = LoginSliceState &
   VerifyCodeSliceState &
   ConnectSliceState &
-  MenuSliceState;
+  MenuSliceState &
+  HomeSliceState;
 
 type StoreActions = LoginSliceAction &
   VerifyCodeSliceAction &
   ConnectSliceAction &
-  MenuSliceAction;
+  MenuSliceAction &
+  HomeSliceAction;
 export const useBoundStore = create<StoreState & StoreActions>()((...a) => ({
   ...createLoginSlice(...a),
   ...createVerifyCode(...a),
   ...createConnectSlice(...a),
   ...createMenuSlice(...a),
+  ...createHomeSlice(...a),
 }));

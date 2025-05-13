@@ -1,8 +1,13 @@
-import { authorizeGithubOauth } from "@/networking/authorizeGithubOauth";
+"use client";
+import { base_url } from "@/networking/baseUrl";
+//import { githubCallback } from "@/networking/githubCallback";
 import React from "react";
 import { FaGithub } from "react-icons/fa";
 
 const ConnectGithub = () => {
+  const redirect = () => {
+    window.location.href = `${base_url}/github-auth/github/oauth/start`;
+  };
   return (
     <div className="gap-10 ">
       <div className="bg-white flex flex-col gap-6 px-6 py-8 rounded-3xl  justify-center   ">
@@ -17,7 +22,7 @@ const ConnectGithub = () => {
           </p>
         </div>
         <div
-          onClick={authorizeGithubOauth}
+          onClick={redirect}
           className="bg-black rounded-md text-white flex items-center gap-2.5 px-6 hover:cursor-pointer"
         >
           <FaGithub size={24} />
