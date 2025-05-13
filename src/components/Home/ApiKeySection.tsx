@@ -8,13 +8,14 @@ import {
 } from "@/components/ui/tooltip";
 import { Info, Copy } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useBoundStore } from "@/store/store";
+import Cookies from "universal-cookie";
 
 const ApiKeySection = () => {
-  const apiKey = useBoundStore((state) => state.apiKey);
+  const cookies = new Cookies();
+  const x_api_key: string = cookies.get("api-key");
 
   const copyToClipboard = async () => {
-    await navigator.clipboard.writeText(apiKey);
+    await navigator.clipboard.writeText(x_api_key);
   };
   return (
     <div className="mb-6  bg-[#F7F7F7] p-4">
@@ -39,7 +40,7 @@ const ApiKeySection = () => {
         <div className="flex items-center mb-4  bg-white px-2.5">
           <div className="flex-1 flex items-center text-gray-400">
             {/*   <span className="text-gray-500 mr-2">sk-***</span> */}
-            {apiKey}
+            {x_api_key}
           </div>
           <Button
             onClick={copyToClipboard}

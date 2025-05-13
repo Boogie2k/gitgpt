@@ -6,7 +6,7 @@ import { FaGithub } from "react-icons/fa";
 
 const ConnectGithub = () => {
   const redirect = () => {
-    window.location.href = `${base_url}/github-auth/github/oauth/start`;
+    window.location.href = `${base_url}/auth/github/oauth/start`;
   };
   return (
     <div className="gap-10 ">

@@ -34,9 +34,9 @@ export default function GitHubSuccessPage() {
         if (result.success) {
           setStatus("success");
           // Short delay before redirect to show success state
-          setTimeout(() => {
+          /*  setTimeout(() => {
             router.push("/");
-          }, 1500);
+          }, 1500); */
         } else {
           setStatus("error");
           setErrorMessage("Failed to complete GitHub connection");

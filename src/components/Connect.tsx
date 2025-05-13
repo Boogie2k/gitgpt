@@ -1,10 +1,11 @@
 "use client";
 import React from "react";
 //import ConnectGithub from "./ConnectGithub";
-import ConnectWithToken from "./ConnectWithToken";
+
+import ConnectGithub from "./ConnectGithub";
 
 const Connect = () => {
-  return <ConnectWithToken />;
+  return <ConnectGithub />;
 };
 
 export default Connect;
