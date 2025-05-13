@@ -3,13 +3,22 @@
 import { useEffect, useState } from "react";
 import { CheckCircle, Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { saveToken } from "@/networking/saveToken";
+import { useSearchParams } from "next/navigation";
 
 // This would be your actual API call to finalize the GitHub connection
-async function finalizeGitHubConnection() {
+async function finalizeGitHubConnection(code: string) {
   try {
     // Simulate API call with a delay
     // Replace this with your actual API call
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+    const result = await saveToken(code);
+
+    if (!result) {
+      return {
+        succes: false,
+        error: "somethring went wrong",
+      };
+    }
 
     // Return success
     return { success: true };
@@ -25,18 +34,25 @@ export default function GitHubSuccessPage() {
   );
   const [errorMessage, setErrorMessage] = useState<string>("");
   const router = useRouter();
+  const code = useSearchParams().get("code");
 
   useEffect(() => {
     const completeConnection = async () => {
       try {
-        const result = await finalizeGitHubConnection();
+        if (!code) {
+          return {
+            success: false,
+            error: "somethring went wrong",
+          };
+        }
+        const result = await finalizeGitHubConnection(code);
 
         if (result.success) {
           setStatus("success");
           // Short delay before redirect to show success state
-          /*  setTimeout(() => {
+          setTimeout(() => {
             router.push("/");
-          }, 1500); */
+          }, 1500);
         } else {
           setStatus("error");
           setErrorMessage("Failed to complete GitHub connection");
@@ -49,7 +65,7 @@ export default function GitHubSuccessPage() {
     };
 
     completeConnection();
-  }, [router]);
+  }, [router, code]);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
