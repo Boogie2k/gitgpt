@@ -54,16 +54,26 @@ export default function GitHubSuccessPage() {
           setStatus("success");
           // Short delay before redirect to show success state
           setTimeout(() => {
-            router.push("/");
+            router.replace("/");
           }, 1500);
         } else {
           setStatus("error");
-          setErrorMessage("Failed to complete GitHub connection");
+          setErrorMessage(
+            `Failed to complete GitHub connection,  Redirecting back to the connect page...`
+          );
+          setTimeout(() => {
+            router.replace("/connect");
+          }, 1500);
         }
       } catch (error) {
         setStatus("error");
-        setErrorMessage("An unexpected error occurred");
+        setErrorMessage(
+          `An unexpected error occurred,  Redirecting back to the connect page...`
+        );
         console.log(error);
+        setTimeout(() => {
+          router.replace("/connect");
+        }, 1500);
       }
     };
 
