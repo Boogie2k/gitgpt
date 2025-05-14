@@ -4,7 +4,8 @@ export const logout = (navigateToLogin: () => void) => {
   try {
     const cookies = new Cookies();
 
-    cookies.set("api-key", null);
+    cookies.remove("api-key");
+    cookies.remove("isTokenSaved");
     navigateToLogin();
   } catch {}
 };

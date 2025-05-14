@@ -1,5 +1,6 @@
 import Cookies from "universal-cookie";
 import { base_url } from "./baseUrl";
+import { toast } from "react-toastify";
 
 export const getApiKey = async () => {
   const cookies = new Cookies();
@@ -19,6 +20,7 @@ export const getApiKey = async () => {
 
     if (!response.ok) {
       console.log(result);
+      toast.error(result.error);
       return;
     }
     console.log({ result });

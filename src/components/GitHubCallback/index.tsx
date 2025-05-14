@@ -91,7 +91,7 @@ export default function GitHubSuccessPage() {
         setCountdown((prev) => {
           if (prev <= 1) {
             clearInterval(interval);
-            router.push("/connect");
+            router.replace("/connect");
             return 0;
           }
           return prev - 1;
