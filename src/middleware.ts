@@ -1,10 +1,10 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import Cookies from "universal-cookie";
+//import Cookies from "universal-cookie";
 
 // This function can be marked `async` if using `await` inside
 
-const cookies = new Cookies();
+//const cookies = new Cookies();
 export function middleware(request: NextRequest) {
   // Get the pathname of the request
   const path = request.nextUrl.pathname;
@@ -17,8 +17,8 @@ export function middleware(request: NextRequest) {
     path.includes("/api/");
 
   // Check if user is authenticated by looking for the auth token in cookies
-  // const token = request.cookies.get("isTokenSaved")?.value || "";
-  const token = cookies.get("isTokenSaved");
+  const token = request.cookies.get("isTokenSaved")?.value || "";
+  //const token = cookies.get("isTokenSaved");
 
   // If the user is not authenticated and trying to access a protected route, redirect to connect
   if (!token && !isPublicPath) {
