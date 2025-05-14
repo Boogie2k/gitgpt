@@ -9,6 +9,8 @@ import {
 import { Info, Copy } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Cookies from "universal-cookie";
+import { FiRefreshCcw } from "react-icons/fi";
+import { refresh_api_key } from "@/networking/refresh_api_key";
 
 const ApiKeySection = () => {
   const cookies = new Cookies();
@@ -19,22 +21,25 @@ const ApiKeySection = () => {
   };
   return (
     <div className="mb-6  bg-[#F7F7F7] p-4">
-      <div className="flex items-center mb-2">
-        <h2 className="font-medium">Your API Key</h2>
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <button className="ml-1">
-                <Info className="w-4 h-4 text-gray-400" />
-              </button>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p className="w-64 text-xs">
-                Your API key is used to authenticate your requests
-              </p>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
+      <div className="flex items-center flex-between mb-2">
+        <div className="flex items-center">
+          <h2 className="font-medium">Your API Key</h2>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <button className="ml-1">
+                  <Info className="w-4 h-4 text-gray-400" />
+                </button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p className="w-64 text-xs">
+                  Your API key is used to authenticate your requests
+                </p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        </div>
+        <FiRefreshCcw onClick={refresh_api_key} />
       </div>
       <div className=" rounded-md">
         <div className="flex items-center mb-4  bg-white px-2.5">
