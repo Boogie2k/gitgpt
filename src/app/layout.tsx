@@ -6,7 +6,8 @@ import { Slide, ToastContainer } from "react-toastify";
 const roboto = Roboto({
   subsets: ["latin"],
   display: "swap",
-  variable: "--font-roboto",
+
+  weight: ["400", "700"],
 });
 
 export const metadata: Metadata = {
@@ -20,8 +21,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${roboto.variable} bg-weyotoLight antialiased`}>
+    <html className={`${roboto.className}`} lang="en">
+      <body className={` antialiased bg-weyotoLight `}>
         <ToastContainer
           position="bottom-center"
           autoClose={5000}

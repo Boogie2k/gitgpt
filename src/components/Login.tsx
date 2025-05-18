@@ -7,6 +7,7 @@ import { Button } from "./Button";
 import { login } from "@/networking/login";
 //import { useRouter } from "next/navigation";
 import { useBoundStore } from "@/store/store";
+import Link from "next/link";
 
 const Login = () => {
   // const [email, setEmail] = useState("");
@@ -28,10 +29,10 @@ const Login = () => {
   };
 
   return (
-    <div className="gap-10">
-      <div className="bg-white flex flex-col gap-6 px-6 py-8 rounded-3xl  ">
+    <div className="gap-10 font-roboto">
+      <form className="bg-white flex flex-col gap-6 px-6 py-8 rounded-3xl  max-w-[23.125rem]">
         <div className="flex items-center gap-2.5">
-          <p className="text-black font-roboto font-bold text-2xl capitalize">
+          <p className="text-black font-roboto font-bold text-xl capitalize">
             🔐 Get Started with your email
           </p>
         </div>
@@ -42,6 +43,7 @@ const Login = () => {
           id="filled-basic"
           label="Email"
           variant="filled"
+          placeholder="pied@piper.com"
         />
 
         <Button
@@ -51,10 +53,23 @@ const Login = () => {
         >
           Send verification code
         </Button>
-      </div>
-      <div className="flex flex-row justify-center  mt-10 font-bold">
-        <p className="text-black pr-2.5">Privacy Policy</p>
-        <p className="border-s-2 border-black pl-2.5">Terms of Use</p>
+      </form>
+      <div className="flex flex-row justify-center  mt-10 font-bold ">
+        <Link
+          target="_blank"
+          href={"https://weyoto.com/privacy/"}
+          className="text-black pr-6 underline"
+        >
+          Privacy Policy
+        </Link>
+        <div className="border-1 border-black h-3 self-center mx-3" />
+        <Link
+          target="_blank"
+          href={"https://weyoto.com/terms-conditions/"}
+          className=" pl-6 underline"
+        >
+          Terms of Use
+        </Link>
       </div>
     </div>
   );

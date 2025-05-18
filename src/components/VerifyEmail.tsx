@@ -29,9 +29,9 @@ const VerifyEmail = () => {
 
   return (
     <div className="gap-10">
-      <div className="bg-white flex flex-col gap-6 px-6 py-8 rounded-3xl  ">
+      <form className="bg-white flex flex-col gap-6 px-6 py-8 rounded-3xl  ">
         <div className="flex items-center gap-2.5">
-          <p className="text-black font-roboto font-bold text-2xl">
+          <p className="text-black font-roboto font-bold text-xl">
             ✉️ Enter Verification Code
           </p>
         </div>
@@ -51,7 +51,7 @@ const VerifyEmail = () => {
         >
           VERIFY AND CONTINUE
         </Button>
-      </div>
+      </form>
 
       <p
         onClick={() => {
