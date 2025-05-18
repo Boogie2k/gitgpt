@@ -11,7 +11,7 @@ export const connectGit = async (gitPat: string, navigate: () => void) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        // "x-api-key": "0fceed163997f4152c3836db52d60087",
+       
         "x-api-key": api_key,
       },
       body: JSON.stringify({

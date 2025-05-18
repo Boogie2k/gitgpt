@@ -5,14 +5,15 @@ import { CheckCircle, Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { saveToken } from "@/networking/saveToken";
 import { useSearchParams } from "next/navigation";
-import Cookies from "universal-cookie";
+//import Cookies from "universal-cookie";
+import { setIsSavedTokenCookie } from "@/functions/setCookies";
 
 // This would be your actual API call to finalize the GitHub connection
 async function finalizeGitHubConnection(code: string) {
-  const cookies = new Cookies();
+  //const today = new Date();
+  /*   const twoWeeksFromToday = new Date(today);
+  const cookies = new Cookies(); */
   try {
-    // Simulate API call with a delay
-    // Replace this with your actual API call
     if (!code) {
       return {
         succes: false,
@@ -28,7 +29,7 @@ async function finalizeGitHubConnection(code: string) {
       };
     }
 
-    cookies.set("isTokenSaved", true);
+    setIsSavedTokenCookie();
 
     // Return success
     return { success: true };
