@@ -11,7 +11,7 @@ export function middleware(request: NextRequest) {
 
   // Define public paths that don't require authentication
   const isPublicPath =
-    path === "/connect" ||
+    path === "/get-started" ||
     path.startsWith("/github-callback") ||
     path.includes("/_next") ||
     path.includes("/api/");
@@ -22,11 +22,11 @@ export function middleware(request: NextRequest) {
 
   // If the user is not authenticated and trying to access a protected route, redirect to connect
   if (!token && !isPublicPath) {
-    return NextResponse.redirect(new URL("/connect", request.url));
+    return NextResponse.redirect(new URL("/get-started", request.url));
   }
 
   // If the user is authenticated and trying to access login page, redirect to home
-  if (token && path === "/connect") {
+  if (token && path === "/get-started") {
     return NextResponse.redirect(new URL("/", request.url));
   }
 
