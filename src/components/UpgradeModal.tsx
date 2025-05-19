@@ -10,7 +10,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { CreditCard } from "lucide-react";
-import ImplementPaystack from "./ImplementPaystack";
+//import ImplementPaystack from "./ImplementPaystack";
 
 export default function UpgradeModal() {
   const [open, setOpen] = useState(false);
@@ -108,9 +108,9 @@ export default function UpgradeModal() {
               Upgrade now
               <ArrowRight className="ml-1 h-4 w-4" />
             </Button> */}
-            <button onClick={() => setOpen(false)}>
+            {/*      <button onClick={() => setOpen(false)}>
               <ImplementPaystack />
-            </button>
+            </button> */}
           </DialogFooter>
         </div>
       </DialogContent>
