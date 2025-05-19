@@ -1,3 +1,5 @@
+"use client";
+
 import { paystackApiKey } from "@/paystackApiKey";
 import React from "react";
 
