@@ -27,6 +27,7 @@ export default function WeyotoGitOPT() {
       {/* Main Content */}
       <main className=" mx-auto p-4 px-10 sm:px-[7.5rem]">
         {/* Welcome Section */}
+
         <WelcomeSection />
 
         {/* API Key Section */}

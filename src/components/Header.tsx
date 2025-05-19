@@ -1,6 +1,7 @@
 import React from "react";
-import { Button } from "@/components/ui/button";
+
 import { RiCloseFill } from "react-icons/ri";
+import UpgradeModal from "./UpgradeModal";
 
 const Header = ({
   openMenu,
@@ -24,14 +25,7 @@ const Header = ({
         </div>
 
         <div className="flex items-center gap-2">
-          <Button
-            variant="outline"
-            size="sm"
-            className="text-xs h-7 px-3 bg-black text-white"
-          >
-            Upgrade - $1/mo
-          </Button>
-
+          <UpgradeModal />
           <button onClick={openMenu} className="p-1 bg-[#f7f7f7] rounded-full">
             {!menuOpen ? (
               <svg

@@ -19,6 +19,7 @@ const Login = () => {
 
   const goToVerifyEmail = () => {
     //  router.push("/verify_email");
+
     setIsPage("verifyEmail");
   };
 
