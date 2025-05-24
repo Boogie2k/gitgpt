@@ -6,12 +6,14 @@ import { useRouter } from "next/navigation";
 import { saveToken } from "@/networking/saveToken";
 import { useSearchParams } from "next/navigation";
 import Cookies from "universal-cookie";
+import { useBoundStore } from "@/store/store";
 
 // This would be your actual API call to finalize the GitHub connection
 async function finalizeGitHubConnection(code: string) {
   const today = new Date();
   const twoWeeksFromToday = new Date(today);
   const cookies = new Cookies();
+
   try {
     // Simulate API call with a delay
     // Replace this with your actual API call
@@ -46,6 +48,7 @@ export default function GitHubSuccessPage() {
   const [status, setStatus] = useState<"loading" | "success" | "error">(
     "loading"
   );
+  const reset = useBoundStore((state) => state.getStartedReset);
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [countdown, setCountdown] = useState<number>(15); // 1.5 seconds in tenths of a second
   const router = useRouter();
@@ -61,6 +64,8 @@ export default function GitHubSuccessPage() {
 
         if (result.success) {
           setStatus("success");
+          reset();
+
           /*  // Short delay before redirect to show success state
           setTimeout(() => {
             router.replace("/");
@@ -87,7 +92,7 @@ export default function GitHubSuccessPage() {
     };
 
     completeConnection();
-  }, [router, code]);
+  }, [router, code, reset]);
 
   useEffect(() => {
     if (status !== "success") {
@@ -112,7 +117,7 @@ export default function GitHubSuccessPage() {
       setCountdown((prev) => {
         if (prev <= 1) {
           clearInterval(interval);
-          router.push("/");
+          router.replace("/");
           return 0;
         }
         return prev - 1;

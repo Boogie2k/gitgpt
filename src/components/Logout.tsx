@@ -22,6 +22,7 @@ const Logout = () => {
 
   const handleLogout = () => {
     logout(() => router.replace("/get-started"));
+    setIsLogout(false);
   };
 
   return (

@@ -13,7 +13,7 @@ const ConnectWithToken = () => {
   const setGitPat = useBoundStore((state) => state.setgitPat);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  const reset = useBoundStore((state) => state.loginSliceReset);
+  const reset = useBoundStore((state) => state.getStartedReset);
 
   const goToHomepage = () => {
     router.replace("/");

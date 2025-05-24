@@ -39,12 +39,39 @@ const Login = () => {
         </div>
 
         <TextField
+          style={{ color: "black" }}
+          className="w-[20.125rem]"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           id="filled-basic"
           label="Email"
           variant="filled"
           placeholder="pied@piper.com"
+          sx={{
+            "& .MuiFilledInput-root": {
+              color: "black", // Input text color
+            },
+            "& .MuiInputLabel-root": {
+              color: "black !important", // Label color - always black
+            },
+            "& .MuiInputLabel-root.Mui-focused": {
+              color: "black !important", // Label color when focused - always black
+            },
+            "& .MuiFilledInput-underline:before": {
+              borderBottomColor: "black", // Default underline
+            },
+            "& .MuiFilledInput-underline:hover:before": {
+              borderBottomColor: "black", // Hover underline
+            },
+            "& .MuiFilledInput-underline:after": {
+              borderBottomColor: "black", // Focused underline
+            },
+          }}
+          slotProps={{
+            input: {
+              style: { color: "black" },
+            },
+          }}
         />
 
         <Button

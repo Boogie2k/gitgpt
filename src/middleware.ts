@@ -12,6 +12,7 @@ export function middleware(request: NextRequest) {
   // Define public paths that don't require authentication
   const isPublicPath =
     path === "/get-started" ||
+    path === "/connect-github" ||
     path.startsWith("/github-callback") ||
     path.includes("/_next") ||
     path.includes("/api/");
