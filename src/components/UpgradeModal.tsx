@@ -71,7 +71,7 @@ export default function UpgradeModal() {
                 <span>Secured by paystack</span>
               </div>
               <div className="flex items-center gap-2">
-                <img
+                {/* <img
                   src="/placeholder.svg?height=20&width=32"
                   alt="Visa"
                   className="h-5"
@@ -95,7 +95,8 @@ export default function UpgradeModal() {
                   src="/placeholder.svg?height=20&width=32"
                   alt="Apple Pay"
                   className="h-5"
-                />
+                /> */}
+                <img src={"/assets/payment-method.svg"} />
               </div>
             </div>
           </div>
