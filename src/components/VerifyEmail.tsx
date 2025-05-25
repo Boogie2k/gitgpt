@@ -8,6 +8,7 @@ import { verifyCode } from "@/networking/verifyCode";
 import { useRouter } from "next/navigation";
 import { useBoundStore } from "@/store/store";
 import { login } from "@/networking/login";
+import { formatTime } from "@/functions/formatTime";
 
 const VerifyEmail = () => {
   const email = useBoundStore((state) => state.email);
@@ -75,12 +76,6 @@ const VerifyEmail = () => {
     } finally {
       setIsResending(false);
     }
-  };
-
-  const formatTime = (seconds: number) => {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${mins}:${secs.toString().padStart(2, "0")}`;
   };
 
   return (

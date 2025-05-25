@@ -1,6 +1,8 @@
+import { useBoundStore } from "@/store/store";
 import React from "react";
 
 const WelcomeSection = () => {
+  const email = useBoundStore((state) => state.userEmail);
   return (
     <div className="flex flex-col items-center mb-6">
       <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mb-2">
@@ -27,10 +29,10 @@ const WelcomeSection = () => {
           />
         </svg>
       </div>
-      <h1 className="text-xl font-medium mb-1">Welcome, test@weyoto.com</h1>
+      <h1 className="text-xl font-medium mb-1">Welcome, {email}</h1>
       <p className="text-sm text-gray-500">
-        Copy your API key and connect below, then you&apos;ll learn how you
-        connect with GitOpt in ChatGPT.
+        Copy your API Key and schema below, then paste them into your Custom GPT
+        setup in ChatGPT.
       </p>
     </div>
   );

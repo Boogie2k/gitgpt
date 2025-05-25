@@ -12,14 +12,13 @@ import Cookies from "universal-cookie";
 import { FiRefreshCcw } from "react-icons/fi";
 
 import { useBoundStore } from "@/store/store";
-import { getApiKey } from "@/networking/getApiKey";
-import { login } from "@/networking/login";
+
 import { toast } from "react-toastify";
 import { maskInfo } from "@/functions/maskInfo";
 
 const ApiKeySection = () => {
   const setIsRefreshApikey = useBoundStore((state) => state.setIsRefreshApikey);
-  const setUserEmail = useBoundStore((state) => state.setUserEmail);
+
   const [isRefreshing, setIsRefreshing] = useState(false);
   const apiKey = useBoundStore((state) => state.apiKey);
   const setApiKey = useBoundStore((state) => state.setApiKey);
@@ -33,13 +32,7 @@ const ApiKeySection = () => {
 
     setIsRefreshing(true);
     try {
-      const result = await getApiKey();
-      const email = result.email;
-      setUserEmail(email);
-
-      if (email) {
-        await login(email, () => setIsRefreshApikey(true));
-      }
+      setIsRefreshApikey(true);
     } catch (error) {
       console.log(error);
     } finally {

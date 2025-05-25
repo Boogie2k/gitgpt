@@ -1,14 +1,15 @@
 import React from "react";
 import EditEmail from "./EditEmail";
 import Logout from "./Logout";
-import HandleRefreshApiKey from "./HandleRefreshApiKey";
+
+import GenerateApiKeyPopup from "./GenerateApiKeyPopup";
 
 const Dialog = () => {
   return (
     <>
       <EditEmail />;
       <Logout />
-      <HandleRefreshApiKey />
+      <GenerateApiKeyPopup />
     </>
   );
 };

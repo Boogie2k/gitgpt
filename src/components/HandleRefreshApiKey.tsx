@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 
 import { Button } from "@/components/ui/button";
@@ -17,17 +17,29 @@ import { refresh_api_key } from "@/networking/refresh_api_key";
 import { FiRefreshCcw } from "react-icons/fi";
 import { Slide, toast, ToastContainer } from "react-toastify";
 import { maskInfo } from "@/functions/maskInfo";
+import { formatTime } from "@/functions/formatTime";
+import { login } from "@/networking/login";
 
-const HandleRefreshApiKey = () => {
+const HandleRefreshApiKey = ({
+  isInitiated,
+  setIsInitiated,
+}: {
+  isInitiated: boolean;
+  setIsInitiated: (value: boolean) => void;
+}) => {
   const [code, setCode] = useState("");
-  const isRefreshApiKey = useBoundStore((state) => state.isRefreshApiKey);
+  const [timer, setTimer] = useState(60);
   const setIsRefreshApikey = useBoundStore((state) => state.setIsRefreshApikey);
   const userEmail = useBoundStore((state) => state.userEmail);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const setApiKey = useBoundStore((state) => state.setApiKey);
 
+  const [canResend, setCanResend] = useState(false);
+  const [isResending, setIsResending] = useState(false);
+
   const closeDialog = () => {
     setIsRefreshApikey(false);
+    setIsInitiated(false);
     setCode("");
   };
 
@@ -42,6 +54,7 @@ const HandleRefreshApiKey = () => {
         return;
       }
       setApiKey(result.api_key);
+      toast.success("Your Api Key has been regenerated");
       closeDialog();
     } catch (error) {
       console.log(error);
@@ -49,8 +62,47 @@ const HandleRefreshApiKey = () => {
       setIsRefreshing(false);
     }
   };
+
+  // Timer countdown effect
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+
+    if (timer > 0) {
+      interval = setInterval(() => {
+        setTimer((prev) => {
+          if (prev <= 1) {
+            setCanResend(true);
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+    }
+
+    return () => {
+      if (interval) {
+        clearInterval(interval);
+      }
+    };
+  }, [timer]);
+
+  const handleResendCode = async () => {
+    setIsResending(true);
+    try {
+      // Assuming resendCode function exists and takes email as parameter
+      await login(userEmail, () => console.log(""));
+      // Reset timer and disable resend button
+      setTimer(60);
+      setCanResend(false);
+      setCode(""); // Clear the current code
+    } catch (error) {
+      console.error("Failed to resend code:", error);
+    } finally {
+      setIsResending(false);
+    }
+  };
   return (
-    <Dialog open={isRefreshApiKey} onOpenChange={setIsRefreshApikey}>
+    <Dialog open={isInitiated} onOpenChange={setIsRefreshApikey}>
       <ToastContainer
         position="bottom-center"
         autoClose={5000}
@@ -70,7 +122,7 @@ const HandleRefreshApiKey = () => {
           Edit Email
         </a>
       </DialogTrigger> */}
-      <DialogContent className="flex">
+      <DialogContent className="flex ">
         <FiRefreshCcw className={isRefreshing ? "animate-spin" : ""} />
 
         <div>
@@ -83,20 +135,39 @@ const HandleRefreshApiKey = () => {
             </p>
 
             <div className="mt-4">
-              <label htmlFor="new-email" className="text-sm font-medium">
+              <label htmlFor="code" className="text-sm font-medium">
                 code
               </label>
               <Input
-                id="new-email"
+                id="code"
                 value={code}
                 onChange={(e) => setCode(e.target.value)}
-                placeholder="pied@piper.com"
+                placeholder="123456"
                 className="mt-1"
               />
             </div>
           </div>
 
           <DialogFooter className="flex justify-end gap-2 mt-4">
+            {/* Timer and Resend Section */}
+            <div className="text-center">
+              {!canResend ? (
+                <p className="text-sm text-gray-600">
+                  Resend code in {formatTime(timer)}
+                </p>
+              ) : (
+                <div className="gap-2.5">
+                  <button
+                    type="button"
+                    onClick={handleResendCode}
+                    disabled={isResending}
+                    className="text-sm font-bold hover:cursor-pointer hover:text-blue-800  disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {isResending ? "Sending..." : "Resend code"}
+                  </button>{" "}
+                </div>
+              )}
+            </div>
             <Button
               variant="outline"
               onClick={closeDialog}

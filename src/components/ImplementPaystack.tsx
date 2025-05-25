@@ -1,5 +1,6 @@
 "use client";
 
+import { upgradeToPro } from "@/networking/upgradeToPro";
 import { paystackApiKey } from "@/paystackApiKey";
 import React from "react";
 
@@ -20,6 +21,8 @@ function ImplementPaystack() {
   const handlePaystackSuccessAction = (reference: string) => {
     // Implementation for whatever you want to do with reference and after success call.
     console.log(reference);
+
+    upgradeToPro("monthly");
   };
 
   // you can call this function anything

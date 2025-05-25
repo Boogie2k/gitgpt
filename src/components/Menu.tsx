@@ -46,7 +46,7 @@ const Menu = () => {
     },
   ];
   return (
-    <div className="absolute right-10 sm:right-[7.5rem] top-20 mt-2 w-[19rem] bg-white rounded-md shadow-lg py-1 z-10 border">
+    <div className="absolute right-10 sm:right-[7.5rem] top-20 mt-2 w-[19rem] bg-white rounded-md shadow-lg py-1 z-10 border transition duration-150 ease-in-out">
       <div className="px-4 py-2.5 w-full font-bold border-b border-gray-500">
         Menu
       </div>

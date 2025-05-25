@@ -24,14 +24,14 @@ export default function UpgradeModal() {
         <Button
           variant="outline"
           size="sm"
-          className="text-xs h-7 px-3 bg-black text-white cursor-pointer"
+          className="text-sm font-medium  w-[9.5625rem] h-[2.5rem] bg-black text-white cursor-pointer"
         >
           Upgrade - $1/mo
         </Button>
       </DialogTrigger>
 
       <DialogContent className="sm:max-w-md flex">
-        <CreditCard className="h-5 w-5" />
+        <CreditCard className="h-[2rem] w-[2rem]" />
 
         <div>
           <DialogHeader className="pb-2">
@@ -66,10 +66,6 @@ export default function UpgradeModal() {
               No API key changes. No limits. No setup needed
             </p>
             <div className="flex flex-col items-center space-y-3 pt-2">
-              <div className="flex items-center text-xs text-muted-foreground">
-                <span className="mr-1">•</span>
-                <span>Secured by paystack</span>
-              </div>
               <div className="flex items-center gap-2">
                 {/* <img
                   src="/placeholder.svg?height=20&width=32"
@@ -100,7 +96,7 @@ export default function UpgradeModal() {
               </div>
             </div>
           </div>
-          <DialogFooter className="flex justify-between sm:justify-between">
+          <DialogFooter className="flex justify-between sm:justify-between mt-6">
             <Button
               variant="ghost"
               className="text-gray-500"
